@@ -1,0 +1,86 @@
+﻿@model project_demo.Models.DetailProduct
+
+@{
+    ViewData["Title"] = "SellersDetail";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div>
+    <div class="row justify-content-between">
+        <div class="col-auto">
+            <h1>Details</h1>
+        </div>
+        
+    </div>
+
+    @*  <div id="customAlert" class="alert alert-dismissible alert-warning" style="display: none; background:red">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <h4 class="alert-heading">Reported!</h4>
+    <p class="mb-0" id="alertMessage">The Ad has been reported</p>
+    </div> *@
+
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Product Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt class="col-sm-2">
+            Description:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Availability):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Availability)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostedDate):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryName):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubcategoryName):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SubcategoryName)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    @Html.ActionLink("Add Images", "MultipleFileUpload", new { id= Model.ProductId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("View Images", "DisplayImages", new { id= Model.ProductId }, new { @class = "btn btn-secondary" })
+    
+</div>

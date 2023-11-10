@@ -1,0 +1,53 @@
+﻿@model IEnumerable<project_demo.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="CreateCategory">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                    @Html.ActionLink("Add SubCategory", "AddSubCategory", new {  id=item.CategoryId })
+       
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<button id="ReportedAds" class="btn btn-outline-success">Reported Ads</button>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $("#ReportedAds").click(function () {
+        window.location.href = '@Url.Action("ReportedAds", "Admin")';
+    });
+</script>
+

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<sell_hub.Models.ProductImage>
+
+@{
+    ViewData["Title"] = "DisplayImages";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>DisplayImages</h1>
+
+
+
+
+@foreach (var item in Model) {
+
+
+
+    
+
+      <!-- Small Card 1 -->
+            <div class="col container mt-5 row row-cols-1 row-cols-md-3 g-4" style="display:inline">
+        <div class="card h-100">
+          <img src="@item.ImagePath" class="card-img-top" alt="Image 1">
+          <div class="card-body">
+            <h5 class="card-title" hidden>Card 1</h5>
+            <p class="card-text" hidden>Some description about Image 1.</p>
+          </div>
+        </div>
+      </div>
+
+    
+
+
+
+
+
+
+
+
+
+   @*  <div class="card" style="width: 18rem; display:inline">
+        <img class="card-img-top" src="@item.ImagePath" alt="Card image cap">
+        <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+    </div> *@
+    @* <br /><br /> *@
+        
+}
+    

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<project_demo.Models.DetailWishlist>
+
+@{
+    ViewData["Title"] = "WishList";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>WishList</h1>
+
+@foreach (var item in Model)
+{
+
+    <div style="display:inline-flex; margin-inline:.5%">
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+
+            <div class="card-header d-flex justify-content-between">
+                <div class="float-left">@item.ProductName</div>
+                @Html.ActionLink("", "RemoveWishlistItem", new{id=item.WishlistId}, new { @class = "btn-close float-right" })
+            </div>
+
+            
+
+
+            <div class="card-body">
+                <h4 class="card-title">Price: @item.Price</h4>
+                <p class="card-text">Availablity: @item.Availability </p>
+                @Html.ActionLink("Details", "WishDetails", new { id = item.ProductId }, new { @class = "btn btn-lg btn-primary" })
+
+            </div>
+        </div>
+    </div>
+
+}

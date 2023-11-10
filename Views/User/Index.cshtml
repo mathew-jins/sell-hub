@@ -1,0 +1,173 @@
+﻿@model IEnumerable<project_demo.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+
+<p>
+
+    @using (Html.BeginForm("Index", "User", FormMethod.Get))
+    {
+        <select name="Category" class="form-control" id="Cate">
+        </select> <br />
+        <select name="SubCategory" class="form-control" id="SubCategory">
+            <option disabled selected>Please Select a category</option>
+        </select>
+        <label>
+            Sell
+            @Html.RadioButton("Type", "Sell")
+        </label>
+        <label>
+            Rent
+            @Html.RadioButton("Type", "Rent")
+        </label>
+        <label class="m-3">
+            Availability
+            <input name="Availability"
+                   type="checkbox"
+                   value="Available" />
+        </label> <br />
+        @Html.TextBox("search", null, new { @id = "searchbar", @class = "form-control",  placeholder = "Search for name" }) <input type="submit" value="Search" class="btn btn-light">
+
+    }
+</p>
+<button id="Reloadbutton" class="btn btn-danger">Remove Filters</button>
+<table class="table">
+    <thead>
+        <tr>
+            @* <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+            </th> *@
+            @* <th>
+            @Html.DisplayNameFor(model => model.UserId)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            @*  <th>
+            @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.SubCategoryId)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @* <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @*  <td>
+            @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.SubCategoryId)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Availability)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostedDate)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-primary" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function loadCategories() {
+        $.ajax({
+            url: "@Url.Action("GetCategory", "User")",
+            type: "GET",
+            success: function (data) {
+                var categories = $("#Cate");
+                categories.empty();
+                categories.append($('<option value="">--- Select Category ---</option>'));
+                $.each(data, function (index, category) {
+                    categories.append($('<option value="' + category.categoryId + '">' + category.categoryName + '</option>'));
+                });
+            }
+        });
+    }
+
+    // Call the function to load categories
+
+
+    $("#Cate").change(function () {
+        var categoryId = $(this).val();
+        loadSubCategoryById(categoryId);
+    })
+
+
+    function loadSubCategoryById(categoryId) {
+        $.ajax({
+            url: "@Url.Action("GetSubCategory","User")",
+            type: "GET",
+            data: { categoryId: categoryId },
+            success: function (data) {
+                var subCategory = $('#SubCategory');
+                subCategory.empty();
+                subCategory.append($('<option value="" > --- Select Subcategory-- - </option>'));
+                $.each(data, function (index, subcategories) {
+                    subCategory.append($('<option style="font-weight:500;color:"#A4907C";" value="' + subcategories.subcategoryId + '">' + subcategories.subcategoryName + '</option>'));
+                });
+            }
+        });
+    }
+
+    loadCategories();
+
+</script>
+<script>
+    $("#Reloadbutton").click(function () {
+        window.location.href = '@Url.Action("Index", "User")';
+    });
+</script>
+
+

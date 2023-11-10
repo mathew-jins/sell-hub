@@ -1,0 +1,33 @@
+﻿@model sell_hub.Models.ProductImage
+
+@{
+    ViewData["Title"] = "MultipleFileUpload";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Upload Your Images</h1>
+    @Html.ActionLink("Skip", "PostedAds", new { }, new { @class = "btn btn-outline-danger" })
+</div>
+
+<hr />
+<div class="row mx-auto align-items-center">
+    <div class="col-md-4">
+        <form asp-action="MultipleFileUpload" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="GalleryPath">Please upload some Images</label>
+                <input asp-for="GalleryPath" type="file" multiple class="form-control-file" />
+            </div>
+            <br />
+            <div class="form-group col text-center">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

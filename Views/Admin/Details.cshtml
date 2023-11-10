@@ -1,0 +1,43 @@
+﻿@model project_demo.Models.DetailReport
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <h5 class="card-header">Details of Reported Advertisement </h5>
+    <div class="card-body">
+        <h5 class="card-title">Advertisement Details</h5>
+        <ul id="reporter" class="card-text">
+            <li>Product Name: @Model.ProductName </li>
+            <li>Description: @Model.ProductDescription</li>
+            <li>Price: @Model.Price</li>
+            <li>Type: @Model.Type</li>
+            <li>Availability: @Model.Availability</li>
+            <li>Posted Date: @Model.PostedDate</li>
+            <li>Category: @Model.CategoryName</li>
+            <li>SubCategory: @Model.CategoryName</li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <h5 class="card-title">Owner Details</h5>
+        <ul id="reporter" class="card-text">
+            <li>Username: @Model.UserName </li>
+            <li>Name: @Model.Name</li>
+            <li>Phone: @Model.Phone</li>
+            <li>Email: @Model.Address</li>
+            <li>Address: @Model.Email</li>
+
+        </ul>
+
+        <br />
+
+        <div>
+            @Html.ActionLink("Mark As Safe", "Delete", new { id = Model.ReportId }, new{@class="btn btn-success" , @id = "markAsSafeLink"}) |
+            @Html.ActionLink("Remove", "RemoveAd", new { id = Model.ProductId }, new{@class="btn btn-danger" , @id = "removeAd"})
+
+        </div>
+
+    </div>

@@ -1,0 +1,216 @@
+﻿@model project_demo.Models.DetailProduct
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+
+<div>
+    <div class="row justify-content-between">
+        <div class="col-auto">
+            <h1>Details</h1>
+        </div>
+        <div class="col-auto">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <!-- Three vertical dots (ellipsis) symbol -->
+                    <span>&#8942;</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#" data-productid="@Model.ProductId" data-userid="@Model.UserId" onclick="saveToDatabase(this)">Report Ad</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @*  <div id="customAlert" class="alert alert-dismissible alert-warning" style="display: none; background:red">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <h4 class="alert-heading">Reported!</h4>
+    <p class="mb-0" id="alertMessage">The Ad has been reported</p>
+    </div> *@
+
+    <div id="customAlert" class="alert alert-dismissible alert-warning" style="display: none;">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 id="alertHead" class="alert-heading"></h4>
+        <p class="mb-0" id="alertMessage"></p>
+    </div>
+
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Product Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt class="col-sm-2">
+            Description:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Availability):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Availability)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostedDate):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryName):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubcategoryName):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SubcategoryName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <button class="btn btn-success" data-productid="@Model.ProductId" onclick="saveDatabase(this)">Add to Wishlist</button>
+    @Html.ActionLink("View Images", "DisplayImages", new { id= Model.ProductId }, new { @class = "btn btn-secondary" })
+    <button class="btn btn-dark" id="sendDataButton">Send Data</button>
+    <script>
+        // JavaScript function to send data to the controller
+        function sendDataToController() {
+            var userId = @Model.UserId; // Accessing the UserId from the Model
+            var productId = @Model.ProductId; // Accessing the ProductId from the Model
+
+            // Make an AJAX request to the controller action
+            $.ajax({
+                url: "@Url.Action("SendMessage", "YourController")",
+                method: "POST",
+                data: { userId: userId, productId: productId },
+                success: function (result) {
+                    // Handle the success response
+                    alert("Sent successfully!");
+                    location.
+                },
+                error: function () {
+                    // Handle the error
+                    console.error("An error occurred while sending data.");
+                }
+            });
+        }
+
+        // Attach the click event to the button
+        $(document).ready(function () {
+            $("#sendDataButton").click(function () {
+                sendDataToController();
+            });
+        });
+    </script>
+
+</div>
+
+
+<script>
+    function saveToDatabase(item) {
+        var productId = $(item).data("productid");
+        var userId = $(item).data("userid");
+
+        // Make an AJAX POST request to a controller action
+        $.ajax({
+            url: "@Url.Action("ReportAd", "User")",
+            method: "POST",
+            data: { productId: productId, userId: userId },
+            success: function (result) {
+                if (result.success) {
+                    displayAlert("Ad Reported Successfully!", "alert-success");
+                } else {
+                    displayAlert("Failed to report", "alert-danger");
+                }
+            },
+            error: function () {
+                displayAlert("An error occurred while making the request.", "alert-danger");
+            }
+        });
+    }
+
+    function displayAlert(message, alertClass) {
+        // Set the alert message
+        $("#alertMessage").text(message);
+
+        // Apply the Bootstrap alert class
+        $("#customAlert").removeClass("alert-success alert-info alert-warning alert-danger");
+        $("#customAlert").addClass(alertClass);
+
+        // Show the custom alert
+        $("#customAlert").show();
+
+        setTimeout(function () {
+            customAlert.hide();
+        }, 3000); // Close after 3 seconds
+    }
+</script>
+
+<script>
+    function saveDatabase(button) {
+        var productID = $(button).data("productid");
+
+        $.ajax({
+            url: '/User/AddToWishlist', // Replace with your controller and action
+            type: 'POST',
+            data: {
+                productID: productID
+                
+            },
+            success: function (data) {
+                // Handle the success response here
+                if (data.success) {
+                    displayAlert('Added to Wishlist!', 'alert-success');
+                } else {
+                    displayAlert('Error saving to Wishlist.', 'alert-danger');
+                }
+            },
+            error: function () {
+                displayAlert('An error occurred while saving to Wishlist.', 'alert-danger');
+            }
+        });
+    }
+
+    function displayAlert(message, alertClass) {
+        var customAlert = $('#customAlert');
+        customAlert.removeClass('alert-success alert-info alert-warning alert-danger');
+        customAlert.addClass('alert ' + alertClass);
+
+        var alertMessage = $('#alertMessage');
+        alertMessage.text(message);
+
+        customAlert.show();
+
+        setTimeout(function () {
+            customAlert.hide();
+        }, 3000); // Close after 3 seconds
+    }
+</script>
