@@ -11,21 +11,63 @@ namespace sell_hub.Controllers
 
             var userid = (int)HttpContext.Session.GetInt32("UserID");
 
-            var Query= db.chats.Where(c=> c.ProductId==id).OrderBy(c=>c.Timestamp).ToList();
+            var Query= db.chats.Where(c=> c.ProductId==id && c.ReceiverId==userid).OrderBy(c=>c.Timestamp).ToList();
             return View(Query);
         }
-       
-        // YourController.cs
+
+        public ActionResult Enquiry()
+        {
+            return View();
+
+        }
 
         [HttpPost]
-        public IActionResult SendMessage(int userId, int productId)
+        public ActionResult Enquiry(int id, Chat chat)
+        {
+            try
+            {
+                SellerContextcs db = new SellerContextcs();
+               
+                var rcv= db.Products.Where(p=>p.ProductId==id).Select(p=>p.UserId).FirstOrDefault();
+
+                int usr= (int)HttpContext.Session.GetInt32("UserID");
+
+                chat.SenderID = usr;     
+                chat.ReceiverId = rcv;
+                chat.ProductId = id;
+                chat.Timestamp = DateTime.Now;
+
+                db.chats.Add(chat);
+                db.SaveChanges();
+
+                return RedirectToAction("Details", "User", new { id = chat.ProductId });
+
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+       
+        // YourController.cs
+/*
+        [HttpPost]
+        public IActionResult SendMessage(int userId, int productId, Chat chat)
         {
             try
             {
                 SellerContextcs db = new SellerContextcs();
 
+                var senderid = (int)HttpContext.Session.GetInt32("UserID");
 
-
+                chat.SenderID = senderid;
+                chat.ReceiverId= userId;
+                chat.ProductId = productId;
+                chat.Message = "Connected to seller";
+                chat.Timestamp= DateTime.Now;
+                db.chats.Add(chat);
+                db.SaveChanges();
 
                 return Json(new { success = true });
             }
@@ -35,7 +77,7 @@ namespace sell_hub.Controllers
                 // Return an error response
                 return Json(new { success = false });
             }
-        }
+        }*/
 
     }
 }

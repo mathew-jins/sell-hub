@@ -188,7 +188,8 @@ namespace sell_hub.Controllers
             {
                 SellerContextcs db = new SellerContextcs();
                 report.ProductId = productid;
-                report.UserId = userid; ;
+                report.UserId = userid;
+
                 db.Reports.Add(report);
                 db.SaveChanges();
 

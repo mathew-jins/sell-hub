@@ -97,39 +97,11 @@
     </dl>
 </div>
 <div>
-    <button class="btn btn-success" data-productid="@Model.ProductId" onclick="saveDatabase(this)">Add to Wishlist</button>
+    <button class="btn btn-primary" data-productid="@Model.ProductId" onclick="saveDatabase(this)">Add to Wishlist</button>
     @Html.ActionLink("View Images", "DisplayImages", new { id= Model.ProductId }, new { @class = "btn btn-secondary" })
-    <button class="btn btn-dark" id="sendDataButton">Send Data</button>
-    <script>
-        // JavaScript function to send data to the controller
-        function sendDataToController() {
-            var userId = @Model.UserId; // Accessing the UserId from the Model
-            var productId = @Model.ProductId; // Accessing the ProductId from the Model
-
-            // Make an AJAX request to the controller action
-            $.ajax({
-                url: "@Url.Action("SendMessage", "YourController")",
-                method: "POST",
-                data: { userId: userId, productId: productId },
-                success: function (result) {
-                    // Handle the success response
-                    alert("Sent successfully!");
-                    location.
-                },
-                error: function () {
-                    // Handle the error
-                    console.error("An error occurred while sending data.");
-                }
-            });
-        }
-
-        // Attach the click event to the button
-        $(document).ready(function () {
-            $("#sendDataButton").click(function () {
-                sendDataToController();
-            });
-        });
-    </script>
+    @Html.ActionLink("Chat", "Enquiry", "Chat", new { id= Model.ProductId }, new { @class = "btn btn-dark" })
+    
+   
 
 </div>
 

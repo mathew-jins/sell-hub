@@ -1,59 +1,62 @@
 ﻿@model sell_hub.Models.Chat
 
 @{
-    ViewData["Title"] = "SendMessage";
+    ViewData["Title"] = "Enquiry";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>SendMessage</h1>
+<h3 class="text-center">Send Message to Seller</h3>
 
-<h4>Chat</h4>
+
 <hr />
-<div class="row">
+<div class="row h-100 d-flex align-items-center justify-content-center">
     <div class="col-md-4">
-        <form asp-action="SendMessage">
+        <form asp-action="Enquiry" id="myForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @* <div class="form-group">
+           @*  <div class="form-group">
                 <label asp-for="ChatId" class="control-label"></label>
                 <input asp-for="ChatId" class="form-control" />
                 <span asp-validation-for="ChatId" class="text-danger"></span>
-            </div> *@
-            @* <div class="form-group">
+            </div>
+            <div class="form-group">
                 <label asp-for="SenderID" class="control-label"></label>
                 <input asp-for="SenderID" class="form-control" />
                 <span asp-validation-for="SenderID" class="text-danger"></span>
-            </div> *@
-            @* <div class="form-group">
+            </div>
+            <div class="form-group">
                 <label asp-for="ReceiverId" class="control-label"></label>
                 <input asp-for="ReceiverId" class="form-control" />
                 <span asp-validation-for="ReceiverId" class="text-danger"></span>
-            </div> *@
-            @* <div class="form-group">
+            </div>
+            <div class="form-group">
                 <label asp-for="ProductId" class="control-label"></label>
                 <input asp-for="ProductId" class="form-control" />
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div> *@
             <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
+                <label asp-for="Message" class="control-label" hidden></label>
+                <input asp-for="Message" placeholder="Write your message here" class="form-control" />
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
+           @*  <div class="form-group">
                 <label asp-for="Timestamp" class="control-label"></label>
                 <input asp-for="Timestamp" class="form-control" />
                 <span asp-validation-for="Timestamp" class="text-danger"></span>
             </div> *@
-            <div class="form-group">
-                <input type="submit" value="Send" class="btn btn-primary" />
+            <br />
+            <div class="form-group col text-center">
+                <input type="submit" value="Send Message" class="btn btn-outline-dark" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+<script>
+    // JavaScript function to handle form submission and show the alert
+    document.getElementById('myForm').addEventListener('submit', function (event) {
+        
+        alert('Message Sent!');
+    });
+</script>
